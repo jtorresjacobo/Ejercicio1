@@ -2,7 +2,7 @@ import pyaudio
 import wave 
 import numpy as np
 
-f = wave.open('quechua1.wav',"r")  
+f = wave.open('audioEres_Mi_Sueno_-_Carlo_Supo_Feat_features_slow.wav',"r")  
 p = pyaudio.PyAudio()  
 # open stream  
 stream = p.open(format = p.get_format_from_width(f.getsampwidth()),  

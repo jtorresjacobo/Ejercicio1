@@ -4,16 +4,18 @@ from pydub import AudioSegment
 import soundfile as sf
 
 
-def separate_audio(path):
+def separate_audio(paths,filename):
 	#tiempo total en segundos
 	s_extension=path.split(".")
-	print(os.getcwd()+"/"+path)
-	f = sf.SoundFile(os.getcwd()+"/"+path)
+	print(paths+"/"+filename)
+
+	name=filename.split(".")
+	f = sf.SoundFile(paths+"/"+filename)
 	total=int(format(len(f) / f.samplerate))
 	cant=total/30
 	sobrante=total-cant*30
 
-	sound=AudioSegment.from_wav(path)
+	sound=AudioSegment.from_wav(paths+"/"+filename)
 	sound=sound.set_channels(1)
 	halfway_point=len(sound)
 
@@ -24,13 +26,13 @@ def separate_audio(path):
 	k=30000
 	for i in range(0,cant):
 		audio=sound[j:k]
-		if i==0:
-			os.system("mkdir "+"Audios_separados")
-		audio.export("Audios_separados/"+s_extension[0]+"_"+str(i),format="wav")
+		#if i==0:
+		#os.system("mkdir "+"Audios_separados")
+		audio.export(paths+"/"+"cut_"+name[0]+"_"+str(i),format="wav")
 		j=j+30000
 		k=k+30000
 		i=i+1
 		if i==cant and sobrante!=0:
 			k=k+30000
 			audio=sound[j:halfway_point]
-			audio.export("Audios_separados/"+s_extension[0]+"_"+str(i),format="wav")
+			audio.export(paths+"/"+"cut_"+name[0]+"_"+str(i),format="wav")
